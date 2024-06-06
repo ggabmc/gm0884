@@ -96,8 +96,8 @@ public class Controller {
         double preDiscountCharge = chargeDays * tool.getDailyCharge();
         double discountAmount = getCalculationTotalWithDiscount(tool.getDailyCharge(), chargeDays, discountPercent);
         double preDiscountChargeRounded  = Math.round( preDiscountCharge * 100 );    //Pre-discount charge - Calculated as charge days X daily charge. Resulting total rounded half up to cents.
+        double discountAmountRounded = Math.round( discountAmount * 100 ); //Pre-discount charge - Calculated as charge days X daily charge. Resulting total rounded half up to cents.
         double resultPreDiscountChargeRounded = preDiscountChargeRounded / 100;
-        double discountAmountRounded = Math.round(  discountAmount * 100 );
         double resultDiscountAmountRounded = discountAmountRounded /100;
 
         DecimalFormat formatter = new DecimalFormat("$#,###.##");
@@ -115,7 +115,7 @@ public class Controller {
         rentalAgreement.setPreDiscountCharge(formatter.format(resultPreDiscountChargeRounded)); // Rounded
         rentalAgreement.setDiscountPercentage("%"+discountPercent);
         rentalAgreement.setDiscountAmount(formatter.format(resultDiscountAmountRounded)); // Rounded
-        rentalAgreement.setFinalCharge(formatter.format(preDiscountCharge - discountAmount));
+        rentalAgreement.setFinalCharge(formatter.format(resultPreDiscountChargeRounded - resultDiscountAmountRounded)); //preDiscountCharge - discountAmount
 
         printRentalAgreement(rentalAgreement);
 
