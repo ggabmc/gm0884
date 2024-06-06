@@ -115,7 +115,7 @@ public class Controller {
                 .append("Charge days: ").append(rentalAgreement.getChargeDays()).append("\n")
                 .append("Pre discount charge: ").append(rentalAgreement.getPreDiscountCharge()).append("\n")
                 .append("Discount percent: ").append(rentalAgreement.getDiscountPercentage()).append("\n")
-                .append("Discount amount").append(rentalAgreement.getDiscountAmount()).append("\n")
+                .append("Discount amount: ").append(rentalAgreement.getDiscountAmount()).append("\n")
                 .append("Final charge: ").append(rentalAgreement.getFinalCharge()).append("\n")
                 .append("\n");
 
