@@ -49,7 +49,7 @@ public class Controller {
 
         LocalDate checkoutDate = LocalDate.parse(inputRequest.getCheckoutDate(), DateTimeFormatter.ofPattern("MM/dd/yyyy")); // day that tool is rented
 
-        LocalDate dueDate = checkoutDate.plusDays(rentalDays);   // day to take the tool rental back
+        LocalDate dueDate = checkoutDate.plusDays(rentalDays -1);   // day to take the tool rental back
 
         int checkoutDay = checkoutDate.getDayOfMonth();
 
