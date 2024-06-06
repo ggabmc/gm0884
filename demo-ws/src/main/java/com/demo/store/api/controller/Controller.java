@@ -74,18 +74,21 @@ public class Controller {
 
             holidays = isLaborDayHoliday(date) && tool.getIsHolidayCharge().equals("NO")  ? holidays + 1: holidays;    // First monday of september
 
-            // If July 4 is weekend and is a holiday   (yes or not weekend charge , holiday will override or decide if is a charge or not)
+            // If July 4 is weekend and is a holiday
             if(date.getDayOfWeek().equals(DayOfWeek.SATURDAY) || date.getDayOfWeek().equals(DayOfWeek.SUNDAY)){
 
+                // both if we have combination about weekend NO charge  +1  and holiday Yes charge "0"  need to remove the weekend and add it to holiday
+                //we transfer the fee from weekends to holiday .... holiday will be priority
                 if(isIndependenceDayHoliday(date) &&  tool.getIsHolidayCharge().equals("YES") ){
                     weekendays--;
                     holidays++;
                 }
 
+                //  both if we have combination about weekend NO charge  +1 and holiday No  charge "1" need to remove the weekend  charge
+                // we dont want double fee charge for the wekend and for the holiday , will will charge just the holiday
                 if(isIndependenceDayHoliday(date) &&  tool.getIsHolidayCharge().equals("NO") ){
                     weekendays--;
                 }
-
             }
         }
 
