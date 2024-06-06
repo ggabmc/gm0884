@@ -64,7 +64,7 @@ public class Controller {
         for(int day = checkoutDay; day <= dueDay; day++){
             LocalDate date = LocalDate.of(checkoutDate.getYear(), checkoutDate.getMonth(), day);
 
-            System.out.println(date.format(DateTimeFormatter.ofPattern("MM/dd/yyyy"))+" : : : "+ date.getMonth().name()+ " "+date.getDayOfMonth() + " "+ date.getDayOfWeek().name()+ " "+ date.getYear());
+            //System.out.println(date.format(DateTimeFormatter.ofPattern("MM/dd/yyyy"))+" : : : "+ date.getMonth().name()+ " "+date.getDayOfMonth() + " "+ date.getDayOfWeek().name()+ " "+ date.getYear());
 
             weekdays = weekdaysList.contains(date.getDayOfWeek()) && tool.getIsWeekDayCharge().equals("NO") ? weekdays + 1 : weekdays;
 
