@@ -55,29 +55,41 @@ public class Controller {
 
         int dueDay = dueDate.getDayOfMonth();
 
-        int weekdaysNoCharge = 0;
-        int weekendaysNoCharge = 0;
-        int holidaysNoCharge = 0;
+        int weekdays = 0;
+        int weekendays = 0;
+        int holidays = 0;
 
         List<DayOfWeek> weekdaysList = List.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY,DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY);
 
         for(int day = checkoutDay; day <= dueDay; day++){
             LocalDate date = LocalDate.of(checkoutDate.getYear(), checkoutDate.getMonth(), day);
-            weekdaysNoCharge = weekdaysList.contains(date.getDayOfWeek()) && tool.getIsWeekDayCharge().equals("NO") ? weekdaysNoCharge + 1 : weekdaysNoCharge;
-            weekendaysNoCharge = date.getDayOfWeek().equals(DayOfWeek.SATURDAY) && tool.getIsWeekendCharge().equals("NO") ? weekendaysNoCharge + 1 : weekendaysNoCharge;
-            weekendaysNoCharge = date.getDayOfWeek().equals(DayOfWeek.SUNDAY) && tool.getIsWeekendCharge().equals("NO") ? weekendaysNoCharge + 1  : weekendaysNoCharge;
-            holidaysNoCharge = isIndependenceDayHoliday(date) && tool.getIsHolidayCharge().equals("NO") ? holidaysNoCharge + 1 : holidaysNoCharge;    // July 5
-            holidaysNoCharge = isLaborDayHoliday(date) && tool.getIsHolidayCharge().equals("NO")  ? holidaysNoCharge + 1: holidaysNoCharge;    // First monday of september
+
+            System.out.println(date.format(DateTimeFormatter.ofPattern("MM/dd/yyyy"))+" : : : "+ date.getMonth().name()+ " "+date.getDayOfMonth() + " "+ date.getDayOfWeek().name()+ " "+ date.getYear());
+
+            weekdays = weekdaysList.contains(date.getDayOfWeek()) && tool.getIsWeekDayCharge().equals("NO") ? weekdays + 1 : weekdays;
+
+            weekendays = date.getDayOfWeek().equals(DayOfWeek.SATURDAY) || date.getDayOfWeek().equals(DayOfWeek.SUNDAY) && tool.getIsWeekendCharge().equals("NO") ? weekendays + 1 : weekendays;
+
+            holidays = isIndependenceDayHoliday(date) && tool.getIsHolidayCharge().equals("NO") ? holidays + 1 : holidays;    // July 5
+
+            holidays = isLaborDayHoliday(date) && tool.getIsHolidayCharge().equals("NO")  ? holidays + 1: holidays;    // First monday of september
 
             // If July 4 is weekend and is a holiday   (yes or not weekend charge , holiday will override or decide if is a charge or not)
-            if(date.getDayOfWeek().equals(DayOfWeek.SATURDAY) || date.getDayOfWeek().equals(DayOfWeek.SUNDAY)  && isIndependenceDayHoliday(date) && tool.getIsHolidayCharge().equals("NO") ){
-                weekendaysNoCharge--;
-            }
+            if(date.getDayOfWeek().equals(DayOfWeek.SATURDAY) || date.getDayOfWeek().equals(DayOfWeek.SUNDAY)){
 
-            //System.out.println(date.format(DateTimeFormatter.ofPattern("MM/dd/yyyy"))+" : : : "+ date.getMonth().name()+ " "+date.getDayOfMonth() + " "+ date.getDayOfWeek().name()+ " "+ date.getYear()+ " : : :  "+ toolDescription.toString());
+                if(isIndependenceDayHoliday(date) &&  tool.getIsHolidayCharge().equals("YES") ){
+                    weekendays--;
+                    holidays++;
+                }
+
+                if(isIndependenceDayHoliday(date) &&  tool.getIsHolidayCharge().equals("NO") ){
+                    weekendays--;
+                }
+
+            }
         }
 
-        int chargeDays = rentalDays - (weekdaysNoCharge + weekendaysNoCharge + holidaysNoCharge);
+        int chargeDays = rentalDays - (weekdays + weekendays + holidays);
         //double preDiscountCharge = Math.round(chargeDays * tool.getDailyCharge());    //Pre-discount charge - Calculated as charge days X daily charge. Resulting total rounded half up to cents.
         //double discountAmount = Math.round(getCalculationTotalWithDiscount(tool.getDailyCharge(), chargeDays, discountPercent));
         double preDiscountCharge = chargeDays * tool.getDailyCharge(); //  Math.round(chargeDays * tool.getDailyCharge())
