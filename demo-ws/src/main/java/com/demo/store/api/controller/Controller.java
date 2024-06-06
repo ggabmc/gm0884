@@ -68,6 +68,12 @@ public class Controller {
             weekendaysNoCharge = date.getDayOfWeek().equals(DayOfWeek.SUNDAY) && tool.getIsWeekendCharge().equals("NO") ? weekendaysNoCharge + 1  : weekendaysNoCharge;
             holidaysNoCharge = isIndependenceDayHoliday(date) && tool.getIsHolidayCharge().equals("NO") ? holidaysNoCharge + 1 : holidaysNoCharge;    // July 5
             holidaysNoCharge = isLaborDayHoliday(date) && tool.getIsHolidayCharge().equals("NO")  ? holidaysNoCharge + 1: holidaysNoCharge;    // First monday of september
+
+            // If July 4 is weekend and is a holiday   (yes or not weekend charge , holiday will override or decide if is a charge or not)
+            if(date.getDayOfWeek().equals(DayOfWeek.SATURDAY) || date.getDayOfWeek().equals(DayOfWeek.SUNDAY)  && isIndependenceDayHoliday(date) && tool.getIsHolidayCharge().equals("NO") ){
+                weekendaysNoCharge--;
+            }
+
             //System.out.println(date.format(DateTimeFormatter.ofPattern("MM/dd/yyyy"))+" : : : "+ date.getMonth().name()+ " "+date.getDayOfMonth() + " "+ date.getDayOfWeek().name()+ " "+ date.getYear()+ " : : :  "+ toolDescription.toString());
         }
 
