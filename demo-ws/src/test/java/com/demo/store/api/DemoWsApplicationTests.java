@@ -22,7 +22,7 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @SpringBootTest
-@AutoConfigureMockMvc //need this in Spring Boot test
+@AutoConfigureMockMvc
 class DemoWsApplicationTests {
 
     @Autowired
@@ -62,16 +62,5 @@ class DemoWsApplicationTests {
             //ResponseRentalAgreement rentalAgreement = objectMapper.readValue(response, ResponseRentalAgreement.class);
             assertEquals(200, mvcResult.getResponse().getStatus());
         }
-
-
-
-
-
-
-
-
-
     }
-
-
 }
