@@ -73,7 +73,7 @@ public class Controller {
 
         int chargeDays = rentalDays - (weekdaysNoCharge + weekendaysNoCharge + holidaysNoCharge);
         //double preDiscountCharge = Math.round(chargeDays * tool.getDailyCharge());    //Pre-discount charge - Calculated as charge days X daily charge. Resulting total rounded half up to cents.
-        //double discountAmount = Math.round(getCalculationTotalWithDiscount(tool.getDailyCharge(), chargeDays, discountPercent)); // calculated from discount % and pre-discount charge. Resulting amount  rounded half up to cents.
+        //double discountAmount = Math.round(getCalculationTotalWithDiscount(tool.getDailyCharge(), chargeDays, discountPercent));
         double preDiscountCharge = chargeDays * tool.getDailyCharge(); //  Math.round(chargeDays * tool.getDailyCharge())
         double discountAmount = getCalculationTotalWithDiscount(tool.getDailyCharge(), chargeDays, discountPercent); //Math.round()
 
