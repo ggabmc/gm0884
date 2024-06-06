@@ -93,10 +93,12 @@ public class Controller {
         }
 
         int chargeDays = rentalDays - (weekdays + weekendays + holidays);
-        //double preDiscountCharge = Math.round(chargeDays * tool.getDailyCharge());    //Pre-discount charge - Calculated as charge days X daily charge. Resulting total rounded half up to cents.
-        //double discountAmount = Math.round(getCalculationTotalWithDiscount(tool.getDailyCharge(), chargeDays, discountPercent));
-        double preDiscountCharge = chargeDays * tool.getDailyCharge(); //  Math.round(chargeDays * tool.getDailyCharge())
-        double discountAmount = getCalculationTotalWithDiscount(tool.getDailyCharge(), chargeDays, discountPercent); //Math.round()
+        double preDiscountCharge = chargeDays * tool.getDailyCharge();
+        double discountAmount = getCalculationTotalWithDiscount(tool.getDailyCharge(), chargeDays, discountPercent);
+        double preDiscountChargeRounded  = Math.round( preDiscountCharge * 100 );    //Pre-discount charge - Calculated as charge days X daily charge. Resulting total rounded half up to cents.
+        double resultPreDiscountChargeRounded = preDiscountChargeRounded / 100;
+        double discountAmountRounded = Math.round(  discountAmount * 100 );
+        double resultDiscountAmountRounded = discountAmountRounded /100;
 
         DecimalFormat formatter = new DecimalFormat("$#,###.##");
 
@@ -110,9 +112,9 @@ public class Controller {
         rentalAgreement.setDueDate(dueDate.format(DateTimeFormatter.ofPattern("MM/dd/yyyy")));
         rentalAgreement.setDailyRentalCharge(formatter.format(tool.getDailyCharge()));
         rentalAgreement.setChargeDays(String.valueOf(chargeDays));
-        rentalAgreement.setPreDiscountCharge(formatter.format(preDiscountCharge));
+        rentalAgreement.setPreDiscountCharge(formatter.format(resultPreDiscountChargeRounded)); // Rounded
         rentalAgreement.setDiscountPercentage("%"+discountPercent);
-        rentalAgreement.setDiscountAmount(formatter.format(discountAmount));
+        rentalAgreement.setDiscountAmount(formatter.format(resultDiscountAmountRounded)); // Rounded
         rentalAgreement.setFinalCharge(formatter.format(preDiscountCharge - discountAmount));
 
         printRentalAgreement(rentalAgreement);
