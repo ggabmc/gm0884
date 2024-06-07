@@ -20,11 +20,12 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
-@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
+
 @SpringBootTest
 @AutoConfigureMockMvc
 class DemoWsApplicationTests {
 
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
     private MockMvc mockMvc;
 
